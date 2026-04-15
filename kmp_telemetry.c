@@ -5,7 +5,7 @@
 
 #define MAX 10000
 
-// Convert numeric data to U/D pattern
+// U/D
 void toPattern(double data[], int n, char pattern[]) {
     for (int i = 1; i < n; i++) {
         if (data[i] > data[i-1])
@@ -16,7 +16,7 @@ void toPattern(double data[], int n, char pattern[]) {
     pattern[n-1] = '\0';
 }
 
-// Compute LPS array
+// LPS
 void computeLPS(char *pat, int m, int *lps) {
     int len = 0;
     lps[0] = 0;
@@ -33,7 +33,6 @@ void computeLPS(char *pat, int m, int *lps) {
     }
 }
 
-// KMP search
 void KMP(char *txt, char *pat) {
     int n = strlen(txt);
     int m = strlen(pat);
@@ -63,7 +62,6 @@ void KMP(char *txt, char *pat) {
     free(lps);
 }
 
-// Read CSV file
 int readCSV(const char *filename, double data[]) {
     FILE *fp = fopen(filename, "r");
     if (!fp) {
@@ -80,13 +78,10 @@ int readCSV(const char *filename, double data[]) {
     return i;
 }
 
-// MAIN
 int main() {
     printf("Telemetry Anomaly Detection\n\n");
 
     double data[MAX];
-
-    // Get current directory path
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
 
@@ -98,11 +93,8 @@ int main() {
     if (n == 0) return 0;
 
     char text[MAX], pattern[MAX];
-
-    // Convert full data to pattern
     toPattern(data, n, text);
 
-    // Known anomaly region
     int start = 2149, end = 2349;
     double anomaly[MAX];
 
