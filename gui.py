@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-# -------- RUN C PROGRAM --------
 def run_detection():
     base_path = os.path.dirname(os.path.abspath(__file__))
     exe_path = os.path.join(base_path, "anomaly")
@@ -17,7 +16,7 @@ def run_detection():
     output_box.insert(tk.END, result.stdout)
     output_box.config(state="disabled")
 
-# -------- SHOW GRAPH --------
+# GRAPH
 def show_graph():
     base_path = os.path.dirname(os.path.abspath(__file__))
     data_path = os.path.join(base_path, "data/test/P-1.npy")
@@ -29,37 +28,28 @@ def show_graph():
 
     ax.clear()
 
-    # Full data (no downsampling)
     ax.plot(data, linewidth=0.6, color="#00FFAA")
-
-    # Highlight anomaly
     ax.axvspan(start, end, color="red", alpha=0.3)
 
-    # Labels
     ax.set_title("Telemetry Data with Anomaly", color="white")
     ax.set_xlabel("Time Index", color="white")
     ax.set_ylabel("Sensor Value", color="white")
 
-    # Tick colors
     ax.tick_params(axis='x', colors='white')
     ax.tick_params(axis='y', colors='white')
 
-    # Background styling
     ax.set_facecolor("#1e1e1e")
     fig.patch.set_facecolor("#121212")
-
-    # Grid
     ax.grid(True, alpha=0.2)
 
     canvas.draw()
 
-# -------- WINDOW --------
+# WINDOW
 root = tk.Tk()
 root.title("🚀 Telemetry Anomaly Detector")
 root.geometry("850x600")
 root.configure(bg="#121212")
 
-# -------- TITLE --------
 title = tk.Label(
     root,
     text="🚀 Telemetry Anomaly Detector",
@@ -69,16 +59,15 @@ title = tk.Label(
 )
 title.pack(pady=15)
 
-# -------- BUTTON FRAME --------
+# BUTTON
 button_frame = tk.Frame(root, bg="#121212")
 button_frame.pack(pady=10)
 
-# -------- BUTTONS (FIXED VISIBILITY) --------
 run_btn = tk.Button(
     button_frame,
     text="Run Detection",
     command=run_detection,
-    bg="#00FFAA",          # bright so always visible
+    bg="#00FFAA",          # bright 
     fg="black",
     activebackground="#00CC88",
     activeforeground="black",
@@ -102,7 +91,6 @@ graph_btn = tk.Button(
 )
 graph_btn.grid(row=0, column=1, padx=15)
 
-# -------- OUTPUT LABEL --------
 output_label = tk.Label(
     root,
     text="Output",
@@ -112,7 +100,6 @@ output_label = tk.Label(
 )
 output_label.pack(anchor="w", padx=30)
 
-# -------- OUTPUT BOX --------
 output_box = tk.Text(
     root,
     height=6,
@@ -125,12 +112,10 @@ output_box = tk.Text(
 output_box.pack(padx=30, pady=10)
 output_box.config(state="disabled")
 
-# -------- GRAPH AREA --------
 fig = plt.Figure(figsize=(7,3), dpi=100)
 ax = fig.add_subplot(111)
 
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas.get_tk_widget().pack(pady=10)
 
-# -------- RUN --------
 root.mainloop()
